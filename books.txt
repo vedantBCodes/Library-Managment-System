@@ -1,0 +1,5 @@
+BookID      BookName        BookAuthor         ISBN            Copies Available
+
+1           Murder!         Arnold Bennett   1-86092-012-8     10
+2           The Hostage     C. S. Forester   1-86092-014-4      3
+3           The Vampyre     John Polidori    1-86092-035-7      5		
