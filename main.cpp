@@ -93,6 +93,22 @@ public:
         }
         in.close();
     }
+    void saveDataInFile()
+    {
+        ofstream out;
+        out.open("books.txt",ios::out);
+        {
+        for(int i=0;i<currentBookIndex;i++)
+        {
+            out<<"Book ID : "<<arr[i].BookID<<endl;
+            out<<"Book Name : "<<arr[i].BookName<<endl;
+            out<<"Book Author : "<<arr[i].BookAuthor<<endl;
+            out<<"ISBN Number : "<<arr[i].ISBN<<endl;
+            out<<"Number of copies : "<<arr[i].Copies<<endl;
+            out<<endl;
+        }
+        }
+    }
 };
 class homeMenu
 {
@@ -124,8 +140,8 @@ public:
             cout << endl
                  << endl;
             cout << "1. add a new user" << endl;
-            cout << "2. add a new book" << endl;
-            cout << "3. display book data" << endl;
+            cout << "2. display book data" << endl;
+            cout << "3. add a new book" << endl;
             cout << "4. to remove a book" << endl;
             cout << "5. Go to Home menu" << endl;
             cout << "6. Exit from the library" << endl;
@@ -160,6 +176,16 @@ public:
 
             case 2:
             {
+                cout << endl
+                     << "Here are the details of books currently available int the library" << endl
+                     << endl;
+                bookInfo obj;
+                obj.displayData();
+            }
+            break;
+
+            case 3:
+            {
                 cout << "So you want to add a new book" << endl;
                 books b;
                 b.BookID = currentBookId;
@@ -184,16 +210,6 @@ public:
                 out << "\t\t\t";
                 out << b.Copies;
                 out.close();
-            }
-            break;
-
-            case 3:
-            {
-                cout << endl
-                     << "Here are the details of books currently available int the library" << endl
-                     << endl;
-                bookInfo obj;
-                obj.displayData();
             }
             break;
 
@@ -233,13 +249,13 @@ public:
 class user
 {
 private:
-    int userCheck;
+    int userCheck,i;
 
 public:
     bool searchBookByID(int id)
     {
         bool check = false;
-        for (int i = 0; i < currentBookIndex; i++)
+        for (i = 0; i < currentBookIndex; i++)
         {
             if (arr[i].BookID == id)
             {
@@ -252,7 +268,7 @@ public:
     bool searchBookByName(string bookName)
     {
         bool check = false;
-        for (int i = 0; i < currentBookIndex; i++)
+        for (i = 0; i < currentBookIndex; i++)
         {
             if (arr[i].BookName == bookName)
             {
@@ -271,8 +287,7 @@ public:
         cout << "you can search for a book " << endl;
         cout << "you can see the book data" << endl;
         cout << "you can borrow a book from a library and" << endl;
-        cout << "you can also return a borrowed book to a library" << endl
-             << endl;
+        cout << "you can also return a borrowed book to a library" << endl;
     }
     void check()
     {
@@ -285,7 +300,7 @@ public:
             cout << "3. borrow a book" << endl;
             cout << "4. return a book" << endl;
             cout << "5. Go to Home menu"<< endl;
-            cout << "5. Exit From the Library" << endl;
+            cout << "6. Exit From the Library" << endl;
             cout << "Choose a valid option : ";
             cin >> userCheck;
 
@@ -364,9 +379,27 @@ public:
                     bool check = searchBookByID(bookId);
                     if (check == true)
                     {
+                        char ch;
                         cout << "Book with ID " << bookId << " is available in the library" << endl;
                         cout << "And there are " << arr[i].Copies << " copies of this book is available in our library" << endl;
-                        cout << "Now you can borrow a book";
+                        cout << "Now you can borrow a book"<<endl;
+                        do
+                        {
+                            cout<<" DO you still want to borrow it (y/n) : ";
+                            cin>>ch;
+                            if(ch=='y')
+                            {
+                                cout<<endl<<"Book Borrowed"<<endl;
+                                arr[i].Copies--;
+                                bookInfo obj;
+                                obj.saveDataInFile();
+
+                            }
+                            else if(ch!='n')
+                            {
+                                cout<<"Invalid option"<<endl;
+                            }
+                        } while ((ch!='y') && (ch!='n'));
                     }
                     else
                     {

@@ -1,18 +1,18 @@
+Book ID : 1
+Book Name : Murder!
+Book Author : Arnold Bennett
+ISBN Number : 1-86092-012-8
+Number of copies : 10
 
-Book ID:1
-Book Name:Murder!
-Book Author:Arnold Bennett 
-ISBN number:1-86092-012-8 
-Number of copies:10
+Book ID : 2
+Book Name : The Hostage
+Book Author : C. S. Forester
+ISBN Number : 1-1-86092-012-8
+Number of copies : 7
 
-Book ID:2
-Book Name:The Hostage 
-Book Author:C. S. Forester 
-ISBN number:1-1-86092-012-8 
-Number of copies:5
+Book ID : 3
+Book Name : The Vampyre
+Book Author : John Polidori
+ISBN Number : 1-86092-035-7
+Number of copies : 3
 
-Book ID:3
-Book Name:The Vampyre 
-Book Author:John Polidori 
-ISBN number:1-86092-035-7
-Number of copies:5
