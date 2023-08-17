@@ -3,7 +3,6 @@
 using namespace std;
 
 // Global Variables and data structures
-// BookID      BookName        BookAuthor         ISBN            Copies
 int i, j, k;
 struct books
 {
@@ -29,34 +28,34 @@ char currentBookNumber = '4';
 int currentBookId = 4;
 string adminName = "Rahul";
 int bookId;
-int currentBookIndex=0;
+string bookName;
+int currentBookIndex = 0;
+
 class bookInfo
 {
 public:
     void previousFileData()
     {
-        arr[currentBookIndex].BookID=1;
-        arr[currentBookIndex].BookName="Murder!";
-        arr[currentBookIndex].BookAuthor="Arnold Bennett";
-        arr[currentBookIndex].ISBN="1-86092-012-8";
-        arr[currentBookIndex].Copies=10;
+        arr[currentBookIndex].BookID = 1;
+        arr[currentBookIndex].BookName = "Murder!";
+        arr[currentBookIndex].BookAuthor = "Arnold Bennett";
+        arr[currentBookIndex].ISBN = "1-86092-012-8";
+        arr[currentBookIndex].Copies = 10;
         currentBookIndex++;
 
-        arr[currentBookIndex].BookID=2;
-        arr[currentBookIndex].BookName="The Hostage";
-        arr[currentBookIndex].BookAuthor="C. S. Forester";
-        arr[currentBookIndex].ISBN="1-1-86092-012-8";
-        arr[currentBookIndex].Copies=5;
+        arr[currentBookIndex].BookID = 2;
+        arr[currentBookIndex].BookName = "The Hostage";
+        arr[currentBookIndex].BookAuthor = "C. S. Forester";
+        arr[currentBookIndex].ISBN = "1-1-86092-012-8";
+        arr[currentBookIndex].Copies = 5;
         currentBookIndex++;
 
-        arr[currentBookIndex].BookID=3;
-        arr[currentBookIndex].BookName="The Vampyre";
-        arr[currentBookIndex].BookAuthor="John Polidori";
-        arr[currentBookIndex].ISBN="1-86092-035-7";
-        arr[currentBookIndex].Copies=5;
+        arr[currentBookIndex].BookID = 3;
+        arr[currentBookIndex].BookName = "The Vampyre";
+        arr[currentBookIndex].BookAuthor = "John Polidori";
+        arr[currentBookIndex].ISBN = "1-86092-035-7";
+        arr[currentBookIndex].Copies = 5;
         currentBookIndex++;
-
-
     }
     void setData()
     {
@@ -79,7 +78,7 @@ public:
         out << "Number of copies:";
         out << arr[currentBookIndex].Copies << endl;
         out << endl;
-        currentBookIndex++; 
+        currentBookIndex++;
     }
     void displayData()
     {
@@ -103,18 +102,20 @@ private:
 public:
     int authority()
     {
-        cout << "As an admin you have much more authority than a normal user" << endl;
+        cout << "As an admin you have much more authority than a normal user" << endl << endl;
         cout << "You can add a new user to our library" << endl;
         cout << "You can add a new book into a library" << endl;
+        cout << " You can see the book data" << endl;
         cout << "And you can also remove an existing book from a library" << endl;
         do
         {
             cout << "Please press a valid option:" << endl;
             cout << "1. add a new user" << endl;
             cout << "2. add a new book" << endl;
-            cout << "3. to remove a book" << endl;
+            cout << "3. display book data" << endl;
+            cout << "4. to remove a book" << endl;
             cin >> adminCheck;
-        } while (adminCheck > 3);
+        } while (adminCheck > 4);
         return adminCheck;
     }
     void check(int adminCheck)
@@ -123,15 +124,6 @@ public:
         {
         case 1:
         {
-            // cout << "So you want to add a new user" << endl;
-            // cout << "Enter his/her  Name:";
-            // cin >> userName[userCount];
-            // cout << "Enter his/her email:";
-            // cin >> userEmail[userCount];
-            // userID[userCount] = (((idStartIndex + 1) * 100) + ((idStartIndex + 2) * 10) + ((idStartIndex + 3) * 1));
-            // cout << "His/her new userID is " << userID[userCount];
-            // userCount++;
-            // idStartIndex++;
             users u;
             cout << "So you want to add a new user" << endl;
             cout << "Enter his/her  Name:";
@@ -157,23 +149,6 @@ public:
         case 2:
         {
             cout << "So you want to add a new book" << endl;
-            // newBookInfo[0] = currentBookNumber;
-            // cout << "Enter the name of the book : ";
-            // cin >> newBookInfo[1];
-            // cout << "Enter the name of the author of the book : ";
-            // cin >> newBookInfo[2];
-            // cout << "Enter the ISBN code of the book : ";
-            // cin >> newBookInfo[3];
-            // cout << "Enter the number of copies you want to add : ";
-            // cin >> newBookInfo[4];
-            // ofstream out;
-            // out.open("books.txt", ios::app); // append mode
-            // for (i = 0; i < 5; i++)
-            // {
-            //     out << newBookInfo[i] << "\t\t\t";
-            // }
-            // cout<<endl;
-            // out.close();
             books b;
             b.BookID = currentBookId;
             currentBookId++;
@@ -202,6 +177,14 @@ public:
 
         case 3:
         {
+             cout<<"Here are the details of books currently available int the library"<<endl<<endl;
+            bookInfo obj;
+            obj.displayData();
+        }
+        break;
+
+        case 4:
+        {
             cout << "So you want to remove a book from the library" << endl;
             cout << "Enter the ID of the book you want to remove : ";
             cin >> bookId;
@@ -221,81 +204,168 @@ private:
     int userCheck;
 
 public:
-    bool searchForABook(int id)
+    bool searchBookByID(int id)
     {
         bool check = false;
-        for(int i=0;i<currentBookIndex;i++)
+        for (int i = 0; i < currentBookIndex; i++)
         {
-            if(arr[i].BookID==id)
+            if (arr[i].BookID == id)
             {
-                check=true;
+                check = true;
+                break;
+            }
+        }
+        return check;
+    }
+    bool searchBookByName(string bookName)
+    {
+        bool check = false;
+        for (int i = 0; i < currentBookIndex; i++)
+        {
+            if (arr[i].BookName == bookName)
+            {
+                check = true;
+                break;
             }
         }
         return check;
     }
 
-    int authority()
+    void authority()
     {
-        cout << "As an user you have not that much authority like an admin" << endl;
-        cout << "But you can search for a book " << endl;
+        cout <<endl<< endl<<"As you are a regular user you have the following authority" << endl;
+        cout << "you can search for a book " << endl;
+        cout<<"you can see the book data"<<endl;
         cout << "you can borrow a book from a library and" << endl;
-        cout << "you can also return a borrowed book to a library" << endl;
+        cout << "you can also return a borrowed book to a library" << endl<<endl;
+    }
+    void check()
+    {
         do
         {
-            cout << "Please press a valid option:" << endl;
-            cout << "1. search for a book" << endl;
-            cout << "2. borrow a book" << endl;
-            cout << "3. return a book" << endl;
+            cout << endl<<"1. search for a book" << endl;
+            cout << "2. Display book data" << endl;
+            cout << "3. borrow a book" << endl;
+            cout << "4. return a book" << endl;
+            cout<<"5. Exit From the Library"<<endl;
+            cout << "Choose a valid option : ";
             cin >> userCheck;
-        } while (userCheck > 2);
-        return userCheck;
-    }
-    void check(int userCheck)
-    {
+        
         switch (userCheck)
         {
         case 1:
         {
-            cout << "So you want to search for a book" << endl;
-            cout << "Enter the ID of a book : ";
-            cin >> bookId;
-            bool check = searchForABook(bookId);
-            if (check == true)
+            int choice;
+            cout << endl<<"So you want to search for a book" << endl;
+            cout << "1.Search book using ID" << endl;
+            cout << "2.Search book using Name" << endl;
+            do
             {
-                cout << "Book with ID " << bookId << " is available in the library";
+                cout << "Enter your choice : ";
+                cin >> choice;
+            } while (choice >= 3);
+            if (choice == 1)
+            {
+                cout << "Enter the ID of a book : ";
+                cin >> bookId;
+                bool check = searchBookByID(bookId);
+                if (check == true)
+                {
+                    cout << "Book with ID " << bookId << " is available in the library";
+                }
+                else
+                {
+                    cout << "Book with ID " << bookId << " is not available in the library";
+                }
             }
-            else
+            else if (choice == 2)
             {
-                cout << "Book with ID " << bookId << " is not available in the library";
-            }
-        }
-        break;
-        case 2:
-        {
-            cout << "So you want to borrow a book" << endl;
-            cout << "Enter a book id:";
-            cin >> bookId;
-            bool check = searchForABook(bookId);
-            if (check == true)
-            {
-                cout << "Book with ID " << bookId << " is available in the library" << endl;
-                cout << "Now you can borrow a book";
-            }
-            else
-            {
-                cout << "As book with ID " << bookId << " is not available in the library" << endl;
-                cout << "you cannot borrow it";
+                cin.ignore();
+                cout << "Enter the name of a book : ";
+                getline(cin, bookName);
+                bool check = searchBookByName(bookName);
+                if (check == true)
+                {
+                    cout << bookName << " book is available in the library" << endl;
+                    cout << "And there are " << arr[i].Copies << " copies of this book is available in our library" << endl;
+                }
+                else
+                {
+                    cout << bookName << " book is not available in the library";
+                }
             }
         }
         break;
 
+        case 2:
+        {
+            cout<<endl<<"Here are the details of books currently available int the library"<<endl<<endl;
+            bookInfo obj;
+            obj.displayData();
+        }
+        break;
         case 3:
         {
-            cout << "So you want to return a book" << endl;
+            int choice;
+            cout << endl<<"So you want to borrow a book" << endl;
+            cout << "1.Borrow book by entering book ID" << endl;
+            cout << "2.Borrow book by entering book Name" << endl;
+            do
+            {
+                cout << "Enter your choice : ";
+                cin >> choice;
+            } while (choice >= 3);
+            if (choice == 1)
+            {
+                cout << "Enter the ID of a book : ";
+                cin >> bookId;
+                bool check = searchBookByID(bookId);
+                if (check == true)
+                {
+                    cout << "Book with ID " << bookId << " is available in the library" << endl;
+                    cout << "And there are " << arr[i].Copies << " copies of this book is available in our library" << endl;
+                    cout << "Now you can borrow a book";
+                }
+                else
+                {
+                    cout << "Book with ID " << bookId << " is not available in the library" << endl;
+                    cout << "so you cannot borrow it";
+                }
+            }
+            else if (choice == 2)
+            {
+                cin.ignore();
+                cout << "Enter the name of a book : ";
+                getline(cin, bookName);
+                bool check = searchBookByName(bookName);
+                if (check == true)
+                {
+                    cout << bookName << " book is available in the library" << endl;
+                    cout << "And there are " << arr[i].Copies << " copies of this book is available in our library" << endl;
+                    cout << "Now you can borrow a book";
+                }
+                else
+                {
+                    cout << bookName << " book is not available in the library";
+                    cout << "so you cannot borrow it";
+                }
+            }
+        }
+        break;
+
+        case 4:
+        {
+            cout << endl<<"So you want to return a book" << endl;
             cout << "Enter a book id:";
             cin >> bookId;
         }
         break;
+
+        case 5:
+        {
+            cout<<endl<<endl<<"Thank You !"<<endl;
+            exit(0);
+        }
 
         default:
         {
@@ -303,21 +373,19 @@ public:
             cout << "Please enter a valid option : ";
         }
         }
+        } while (userCheck !=5);
     }
 };
 int main()
 {
-    cout << "hello ! Welcome to the Library" << endl;
-    cout << "Here are the list of all the books available in the librabry" << endl;
-    bookInfo objBookInfo;
-    objBookInfo.previousFileData();
-    objBookInfo.displayData();
+    cout << "Hello ! Welcome to the TMV Library" << endl;
+    
     int check = 1, id;
-    cout << "Are you a regular user or an admin ." << endl;
     do
     {
-        cout << "press 1 if you are a user" << endl;
-        cout << "press 2 if you are an admin" << endl;
+        cout << "1. user" << endl;
+        cout << "2. admin" << endl;
+        cout << "Choose your rank : ";
         cin >> check;
         switch (check)
         {
@@ -340,11 +408,12 @@ int main()
                 }
                 if (checkForUserId == true)
                 {
-                    cout << "Hello " << userName[i] << " ! Welcome to the library.";
+                    cout << endl
+                         << "Hello " << userName[i] << " ! Welcome to the library.";
                     // USER AUTHORITY
                     user objUser;
-                    int userCheck = objUser.authority();
-                    objUser.check(userCheck);
+                    objUser.authority();
+                    objUser.check();
                 }
                 else
                 {
