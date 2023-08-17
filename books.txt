@@ -16,5 +16,3 @@ Book Name:The Vampyre
 Book Author:John Polidori 
 ISBN number:1-86092-035-7
 Number of copies:5
-
-
