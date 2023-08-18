@@ -1,0 +1,5 @@
+book ID:1
+book name:ved
+ISBN number:23453
+Number of copies:3
+

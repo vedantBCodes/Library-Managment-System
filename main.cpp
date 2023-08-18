@@ -37,26 +37,49 @@ class bookInfo
 public:
     void previousFileData()
     {
-        arr[currentBookIndex].BookID = 1;
-        arr[currentBookIndex].BookName = "Murder!";
-        arr[currentBookIndex].BookAuthor = "Arnold Bennett";
-        arr[currentBookIndex].ISBN = "1-86092-012-8";
-        arr[currentBookIndex].Copies = 10;
-        currentBookIndex++;
+        int index=0;
+        int id;
+        string str;
+        ifstream in;
+        in.open("books.txt");
+        while(!in.eof())
+        {
+             in>>id;
+             arr[index].BookID=id;
+             in.ignore();
+             getline(in,str);
+             arr[index].BookName=str;
+            getline(in,str);
+            arr[index].BookAuthor=str;
+            getline(in,str);
+             arr[index].ISBN=str;
+             in.ignore();
+             in>>id;
+            arr[index].Copies=id;
+            index++;
 
-        arr[currentBookIndex].BookID = 2;
-        arr[currentBookIndex].BookName = "The Hostage";
-        arr[currentBookIndex].BookAuthor = "C. S. Forester";
-        arr[currentBookIndex].ISBN = "1-1-86092-012-8";
-        arr[currentBookIndex].Copies = 5;
-        currentBookIndex++;
+            
+        }
+        // arr[currentBookIndex].BookID = 1;
+        // arr[currentBookIndex].BookName = "Murder!";
+        // arr[currentBookIndex].BookAuthor = "Arnold Bennett";
+        // arr[currentBookIndex].ISBN = "1-86092-012-8";
+        // arr[currentBookIndex].Copies = 10;
+        // currentBookIndex++;
 
-        arr[currentBookIndex].BookID = 3;
-        arr[currentBookIndex].BookName = "The Vampyre";
-        arr[currentBookIndex].BookAuthor = "John Polidori";
-        arr[currentBookIndex].ISBN = "1-86092-035-7";
-        arr[currentBookIndex].Copies = 5;
-        currentBookIndex++;
+        // arr[currentBookIndex].BookID = 2;
+        // arr[currentBookIndex].BookName = "The Hostage";
+        // arr[currentBookIndex].BookAuthor = "C. S. Forester";
+        // arr[currentBookIndex].ISBN = "1-1-86092-012-8";
+        // arr[currentBookIndex].Copies = 5;
+        // currentBookIndex++;
+
+        // arr[currentBookIndex].BookID = 3;
+        // arr[currentBookIndex].BookName = "The Vampyre";
+        // arr[currentBookIndex].BookAuthor = "John Polidori";
+        // arr[currentBookIndex].ISBN = "1-86092-035-7";
+        // arr[currentBookIndex].Copies = 5;
+        // currentBookIndex++;
     }
     void setData()
     {
@@ -69,7 +92,7 @@ public:
         cout << "Enter the number of copies:";
         cin >> arr[currentBookIndex].Copies;
         ofstream out;
-        out.open("file.txt", ios::app);
+        out.open("books.txt", ios::app);
         out << "book ID:";
         out << arr[currentBookIndex].BookID << endl;
         out << "book name:";
@@ -415,13 +438,31 @@ public:
                     bool check = searchBookByName(bookName);
                     if (check == true)
                     {
+                        char ch;
                         cout << bookName << " book is available in the library" << endl;
                         cout << "And there are " << arr[i].Copies << " copies of this book is available in our library" << endl;
-                        cout << "Now you can borrow a book";
+                        cout << "Now you can borrow a book"<<endl;
+                        do
+                        {
+                            cout<<" DO you still want to borrow it (y/n) : ";
+                            cin>>ch;
+                            if(ch=='y')
+                            {
+                                cout<<endl<<"Book Borrowed"<<endl;
+                                arr[i].Copies--;
+                                bookInfo obj;
+                                obj.saveDataInFile();
+
+                            }
+                            else if(ch!='n')
+                            {
+                                cout<<"Invalid option"<<endl;
+                            }
+                        } while ((ch!='y') && (ch!='n'));
                     }
                     else
                     {
-                        cout << bookName << " book is not available in the library";
+                        cout << bookName<< " book is not available in the library" << endl;
                         cout << "so you cannot borrow it";
                     }
                 }
@@ -430,10 +471,75 @@ public:
 
             case 4:
             {
+                int choice;
                 cout << endl
                      << "So you want to return a book" << endl;
-                cout << "Enter a book id:";
-                cin >> bookId;
+                cout << "1.Return book by entering book ID" << endl;
+                cout << "2.Return book by entering book Name" << endl;
+                do
+                {
+                    cout << "Enter your choice : ";
+                    cin >> choice;
+                } while (choice >= 3);
+                if (choice == 1)
+                {
+                    cout << "Enter the ID of a book : ";
+                    cin >> bookId;
+                    bool check = searchBookByID(bookId);
+                    if (check == true)
+                    {
+                        char ch;
+                        cout << "There are already " << arr[i].Copies << " copies of this book are available in our library" << endl;
+                       
+                        do
+                        {
+                            cout<<" DO you still want to return it (y/n) : ";
+                            cin>>ch;
+                            if(ch=='y')
+                            {
+                                cout<<endl<<"Book Returned successfully"<<endl;
+                                arr[i].Copies++;
+                                bookInfo obj;
+                                obj.saveDataInFile();
+
+                            }
+                            else if(ch!='n')
+                            {
+                                cout<<"Invalid option"<<endl;
+                            }
+                        } while ((ch!='y') && (ch!='n'));
+                    }
+                }
+                else if (choice == 2)
+                {
+                    cin.ignore();
+                    cout << "Enter the name of a book : ";
+                    getline(cin, bookName);
+                    bool check = searchBookByName(bookName);
+                    if (check == true)
+                    {
+                        char ch;
+                        cout << "There are already " << arr[i].Copies << " copies of this book are available in our library" << endl;
+                        
+                        do
+                        {
+                            cout<<" DO you still want to return it (y/n) : ";
+                            cin>>ch;
+                            if(ch=='y')
+                            {
+                                cout<<endl<<"Book Returned successfully"<<endl;
+                                arr[i].Copies++;
+                                bookInfo obj;
+                                obj.saveDataInFile();
+
+                            }
+                            else if(ch!='n')
+                            {
+                                cout<<"Invalid option"<<endl;
+                            }
+                        } while ((ch!='y') && (ch!='n'));
+                    }
+                }
             }
             break;
 
@@ -548,6 +654,5 @@ int main()
     obj.previousFileData();
     homeMenu obj2;
     obj2.menuList();
-
     return 0;
 }
