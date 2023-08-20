@@ -15,23 +15,14 @@ struct books
 };
 struct books arr[100]; // Array of structures
 
-struct users
-{
-    string name;
-    string email;
-    int id;
-};
 string userName[50];
 int userID[50];
 string userEmail[50];
 int userListIndex;
 int adminID = 321;
-char currentBookNumber = '4';
-int currentBookId = 4;
 string adminName = "Rahul";
 int bookId;
 string bookName;
-int currentBookIndex = 0;
 int index2;
 class userInfo
 {
@@ -51,17 +42,16 @@ public:
     }
     void detailsOfUsers()
     {
-         cout << endl
-                     << "Here are the details of all the users" << endl;
-                cout << endl;
-                for (int i = 0; i < userListIndex - 1; i++)
-                {
-                    cout << "User Name : " << userName[i] << endl;
-                    cout << "User Email : " << userEmail[i] << endl;
-                    cout << "User ID : " << userID[i] << endl;
-                    cout << endl;
-                }
-
+        cout << endl
+             << "Here are the details of all the users" << endl;
+        cout << endl;
+        for (int i = 0; i < userListIndex - 1; i++)
+        {
+            cout << "User Name : " << userName[i] << endl;
+            cout << "User Email : " << userEmail[i] << endl;
+            cout << "User ID : " << userID[i] << endl;
+            cout << endl;
+        }
     }
 };
 
@@ -72,7 +62,7 @@ public:
     {
         index2 = 0;
         ifstream in;
-        in.open("books2.txt");
+        in.open("booksInfo.txt");
         while (in.eof() == 0)
         {
             in >> arr[index2].BookID >> arr[index2].BookName >> arr[index2].BookAuthor >> arr[index2].ISBN >> arr[index2].Copies;
@@ -104,7 +94,7 @@ public:
     void saveDataInFile()
     {
         ofstream out;
-        out.open("books2.txt", ios::out);
+        out.open("booksInfo.txt", ios::out);
         {
             for (int i = 0; i < index2 - 1; i++)
             {
@@ -208,9 +198,9 @@ public:
 
             case 2:
             {
-               userInfo obj;
-               obj.userList();
-               obj.detailsOfUsers();
+                userInfo obj;
+                obj.userList();
+                obj.detailsOfUsers();
             }
             break;
 
@@ -239,7 +229,7 @@ public:
                 cout << "Enter the number of copies:";
                 cin >> arr[index2].Copies;
                 ofstream out;
-                out.open("books2.txt", ios::app);
+                out.open("booksInfo.txt", ios::app);
                 out << arr[index2].BookID << " ";
                 out << arr[index2].BookName << " ";
                 out << arr[index2].BookAuthor << " ";
@@ -459,8 +449,7 @@ public:
                     bool check = searchBookByID(bookId);
                     if (check == true)
                     {
-                        cout << endl
-                             << "Book with ID " << bookId << " is available in the library" << endl;
+                        cout << endl;
                         cout << endl
                              << "Here are the details of the book : " << endl;
                         bookInfo obj;
@@ -520,35 +509,43 @@ public:
                     cout << "Enter the ID of a book : ";
                     cin >> bookId;
                     bool check = searchBookByID(bookId);
-                    if (check == true)
+                    if (arr[i].Copies != 0)
                     {
-                        char ch;
-                        cout << endl
-                             << "Here are the details of the book : " << endl;
-                        bookInfo obj;
-                        obj.detailsOfABook(i);
-                        do
+                        if (check == true)
                         {
-                            cout << " DO you still want to borrow it (y/n) : ";
-                            cin >> ch;
-                            if (ch == 'y')
+                            char ch;
+                            cout << endl
+                                 << "Here are the details of the book : " << endl;
+                            bookInfo obj;
+                            obj.detailsOfABook(i);
+                            do
                             {
-                                cout << endl
-                                     << "Book Borrowed" << endl;
-                                arr[i].Copies--;
-                                bookInfo obj;
-                                obj.saveDataInFile();
-                            }
-                            else if (ch != 'n')
-                            {
-                                cout << "Invalid option" << endl;
-                            }
-                        } while ((ch != 'y') && (ch != 'n'));
+                                cout << " DO you still want to borrow it (y/n) : ";
+                                cin >> ch;
+                                if (ch == 'y')
+                                {
+                                    cout << endl
+                                         << "Book Borrowed" << endl;
+                                    arr[i].Copies--;
+                                    bookInfo obj;
+                                    obj.saveDataInFile();
+                                }
+                                else if (ch != 'n')
+                                {
+                                    cout << "Invalid option" << endl;
+                                }
+                            } while ((ch != 'y') && (ch != 'n'));
+                        }
+                        else
+                        {
+                            cout << "Book with ID " << bookId << " is not available in the library" << endl;
+                            cout << "so you cannot borrow it";
+                        }
                     }
                     else
                     {
-                        cout << "Book with ID " << bookId << " is not available in the library" << endl;
-                        cout << "so you cannot borrow it";
+                        cout << "Book with ID " << bookId << " is not available in the library now" << endl;
+                        cout << "But it will be available soon ";
                     }
                 }
                 else if (choice == 2)
@@ -558,36 +555,44 @@ public:
                     cout << "Enter the name of a book : ";
                     getline(cin, bookName);
                     bool check = searchBookByName(bookName);
-                    if (check == true)
+                    if (arr[i].Copies != 0)
                     {
-                        char ch;
-                        cout << endl
-                             << "Here are the details of the book : " << endl;
-                        bookInfo obj;
-                        obj.detailsOfABook(i);
-
-                        do
+                        if (check == true)
                         {
-                            cout << " DO you still want to borrow it (y/n) : ";
-                            cin >> ch;
-                            if (ch == 'y')
+                            char ch;
+                            cout << endl
+                                 << "Here are the details of the book : " << endl;
+                            bookInfo obj;
+                            obj.detailsOfABook(i);
+
+                            do
                             {
-                                cout << endl
-                                     << "Book Borrowed" << endl;
-                                arr[i].Copies--;
-                                bookInfo obj;
-                                obj.saveDataInFile();
-                            }
-                            else if (ch != 'n')
-                            {
-                                cout << "Invalid option" << endl;
-                            }
-                        } while ((ch != 'y') && (ch != 'n'));
+                                cout << " DO you still want to borrow it (y/n) : ";
+                                cin >> ch;
+                                if (ch == 'y')
+                                {
+                                    cout << endl
+                                         << "Book Borrowed" << endl;
+                                    arr[i].Copies--;
+                                    bookInfo obj;
+                                    obj.saveDataInFile();
+                                }
+                                else if (ch != 'n')
+                                {
+                                    cout << "Invalid option" << endl;
+                                }
+                            } while ((ch != 'y') && (ch != 'n'));
+                        }
+                        else
+                        {
+                            cout << bookName << " book is not available in the library" << endl;
+                            cout << "so you cannot borrow it";
+                        }
                     }
                     else
                     {
-                        cout << bookName << " book is not available in the library" << endl;
-                        cout << "so you cannot borrow it";
+                        cout << "Book with ID " << bookId << " is not available in the library now" << endl;
+                        cout << "But it will be available soon ";
                     }
                 }
             }
@@ -613,11 +618,15 @@ public:
                     if (check == true)
                     {
                         char ch;
+                        cout << endl
+                             << "Here are the details of the book : " << endl;
+                        bookInfo obj;
+                        obj.detailsOfABook(i);
                         cout << "There are already " << arr[i].Copies << " copies of this book are available in our library" << endl;
-
+                        cout << " DO you still want to return it (y/n) : ";
                         do
                         {
-                            cout << " DO you still want to return it (y/n) : ";
+
                             cin >> ch;
                             if (ch == 'y')
                             {
@@ -630,6 +639,7 @@ public:
                             else if (ch != 'n')
                             {
                                 cout << "Invalid option" << endl;
+                                cout << "Please enter a valid option (y/n) : ";
                             }
                         } while ((ch != 'y') && (ch != 'n'));
                     }
@@ -649,7 +659,7 @@ public:
                         cin >> arr[index2].ISBN;
                         arr[index2].Copies = 1;
                         ofstream out;
-                        out.open("books2.txt", ios::app);
+                        out.open("booksInfo.txt", ios::app);
                         out << arr[index2].BookID << " ";
                         out << arr[index2].BookName << " ";
                         out << arr[index2].BookAuthor << " ";
@@ -705,7 +715,7 @@ public:
                         cin >> arr[index2].ISBN;
                         arr[index2].Copies = 1;
                         ofstream out;
-                        out.open("books2.txt", ios::app);
+                        out.open("booksInfo.txt", ios::app);
                         out << arr[index2].BookID << " ";
                         out << arr[index2].BookName << " ";
                         out << arr[index2].BookAuthor << " ";
@@ -824,7 +834,8 @@ void homeMenu::menuList()
 }
 int main()
 {
-    cout << "Hii ! Welcome to the TMV Library" << endl;
+    cout << endl
+         << "Hii ! Welcome to the TMV Library" << endl;
     bookInfo obj;
     obj.previousFileData();
     userInfo obj2;
