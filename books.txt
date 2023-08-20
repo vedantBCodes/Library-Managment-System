@@ -1,30 +1,9 @@
-book ID:2
-book name:ved
-book author:435534
-ISBN number:
-Number of copies:5
-
-book ID:5
-book name:Mahabharat
-book author:79898
-ISBN number:
-Number of copies:1
-
-book ID:4
-book name:bhj
-book author:4542
-ISBN number:
-Number of copies:5
-
-book ID:345
-book name:tsb
-book author:5645
-ISBN number:
-Number of copies:7
-
-book ID:9
-book name:rfrf
-book author:43543
-ISBN number:
-Number of copies:5
-
+2 ved vedant 1-2343-0233 6
+3 om omkar 1-2343-023-3 7
+4 rahul rahul 1-2343-023-3 5 
+5 Mahabharat Vyas 2-44355-058-8 8
+6 abc xyz 1-233-442-4 1						
+7 def ghi 3-445444-334-2 1 
+8 veda raja 2343-33 1 
+9 fgh gyg_ghj 6767 12 
+10 ebg tshn 345 45 
