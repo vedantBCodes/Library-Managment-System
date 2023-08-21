@@ -19,14 +19,13 @@ string userName[50];
 int userID[50];
 string userEmail[50];
 int userListIndex;
-int adminID = 321;
-string adminName = "Rahul";
+string adminName;
+int adminID ;
 int bookId;
 string bookName;
 int index2;
 class userInfo
 {
-private:
 public:
     void userList()
     {
@@ -147,15 +146,29 @@ public:
         }
         return check;
     }
+    bool checkForUniqueID(int id)
+    {
+        bool check = false;
+        for (int i = 0; i < index2 - 1; i++)
+        {
+            if (arr[i].BookID == id)
+            {
+                check = true;
+            }
+        }
+        return check;
+    }
+
     void authority()
     {
         cout << endl
              << endl
              << "As an admin you have much more authority than a normal user" << endl
              << endl;
-        cout << "You can add a new user to our library" << endl;
-        cout << "You can add a new book into a library" << endl;
-        cout << "You can see the book data" << endl;
+        cout << "You have access to add a new user to our library" << endl;
+        cout << "You have access to add a new book into a library" << endl;
+        cout << "You have access to see the  available book data" << endl;
+        cout << "You can access the user details" << endl;
         cout << "And you can also remove an existing book from a library" << endl;
     }
     void check()
@@ -185,7 +198,8 @@ public:
                 cout << "Enter his/her email:";
                 cin >> userEmail[userListIndex];
                 userID[userListIndex] = (((userListIndex)*100) + ((userListIndex + 1) * 10) + ((userListIndex + 2) * 1));
-                cout << "The new userID of " << userName[userListIndex] << " is : " << userID[userListIndex];
+                cout <<endl <<"The new userID of " << userName[userListIndex] << " is : " << userID[userListIndex];
+                cout<<endl<<"Give it to him/her";
                 ofstream out2;
                 out2.open("userInfo.txt", ios::app); // append mode
                 out2 << userName[userListIndex] << " ";
@@ -217,9 +231,16 @@ public:
 
             case 4:
             {
-                cout << "NOTE-Enter the book name and author name in snake case without using space " << endl;
-                cout << "Enter the book ID:";
-                cin >> arr[index2].BookID;
+                cout <<endl<< "NOTE-Enter the book name and author name in snake case without using space " << endl<<endl;
+                int id;
+                        bool check2;
+                        do
+                        {
+                            cout << "Enter the unique book ID:";
+                            cin >> id;
+                            check2 = checkForUniqueID(id);
+                        } while (check2 != false);
+                arr[index2].BookID=id;
                 cout << "Enter the book name:";
                 cin >> arr[index2].BookName;
                 cout << "Enter the Author name :";
@@ -402,6 +423,18 @@ public:
         }
         return check;
     }
+    bool checkForUniqueID(int id)
+    {
+        bool check = false;
+        for (int i = 0; i < index2 - 1; i++)
+        {
+            if (arr[i].BookID == id)
+            {
+                check = true;
+            }
+        }
+        return check;
+    }
 
     void authority()
     {
@@ -409,7 +442,7 @@ public:
              << endl
              << "As you are a regular user you have the following authority" << endl;
         cout << "you can search for a book " << endl;
-        cout << "you can see the book data" << endl;
+        cout << "you can see the available book data" << endl;
         cout << "you can borrow a book from a library and" << endl;
         cout << "you can also return a borrowed book to a library" << endl;
     }
@@ -457,13 +490,16 @@ public:
                     }
                     else
                     {
+                        cout << endl
+                             << "INVALID ID !"<<endl;
                         cout << "Book with ID " << bookId << " is not available in the library";
                     }
                 }
                 else if (choice == 2)
                 {
                     cin.ignore();
-                    cout << "NOTE-Always enter the book name in snake case without using space " << endl;
+                    cout << endl
+                         << "NOTE-Always enter the book name in snake case without using space " << endl;
                     cout << "Enter the name of a book : ";
                     getline(cin, bookName);
                     bool check = searchBookByName(bookName);
@@ -476,7 +512,8 @@ public:
                     }
                     else
                     {
-                        cout << bookName << " book is not available in the library";
+                        cout << endl
+                             << bookName << " book is not available in the library";
                     }
                 }
             }
@@ -551,7 +588,8 @@ public:
                 else if (choice == 2)
                 {
                     cin.ignore();
-                    cout << "NOTE-Always enter the book name in snake case without using space " << endl;
+                    cout << endl
+                         << "NOTE-Always enter the book name in snake case without using space " << endl;
                     cout << "Enter the name of a book : ";
                     getline(cin, bookName);
                     bool check = searchBookByName(bookName);
@@ -591,7 +629,8 @@ public:
                     }
                     else
                     {
-                        cout << "Book with ID " << bookId << " is not available in the library now" << endl;
+                        cout << endl
+                             << bookName << " book is not available in the library now" << endl;
                         cout << "But it will be available soon ";
                     }
                 }
@@ -679,6 +718,8 @@ public:
                     if (check == true)
                     {
                         char ch;
+                        bookInfo obj;
+                        obj.detailsOfABook(i);
                         cout << "There are already " << arr[i].Copies << " copies of this book are available in our library" << endl;
 
                         do
@@ -705,15 +746,26 @@ public:
                         cout << "There are no copies of the book with name " << bookName << endl
                              << endl;
                         cout << "So You have to enter the whole details of that book" << endl;
-                        cout << "NOTE-Always enter the book name and author name in snake case without using space " << endl;
+                        cout <<endl<< "NOTE-Always enter the book name and author name in snake case without using space " << endl;
                         arr[index2].BookName = bookName;
-                        cout << "Enter the book ID:";
-                        cin >> arr[index2].BookID;
+                        int id;
+                        bool check2;
+                        do
+                        {
+                            cout << "Enter the unique book ID:";
+                            cin >> id;
+                            check2 = checkForUniqueID(id);
+                        } while (check2 != false);
+
+                        arr[index2].BookID = id;
                         cout << "Enter the Author name :";
                         cin >> arr[index2].BookAuthor;
                         cout << "Enter the ISBN number : ";
                         cin >> arr[index2].ISBN;
                         arr[index2].Copies = 1;
+                        cout << endl
+                             << endl
+                             << "Book returned successfully";
                         ofstream out;
                         out.open("booksInfo.txt", ios::app);
                         out << arr[index2].BookID << " ";
@@ -803,6 +855,11 @@ void homeMenu::menuList()
         break;
         case 2:
         {
+            ifstream in;
+            in.open("adminInfo.txt");
+            {
+                in>>adminName>>adminID;
+            }
             cout << "So you are an admin:" << endl;
             cout << "Please enter your adminID to varify : ";
             do
@@ -827,8 +884,7 @@ void homeMenu::menuList()
         }
         break;
         default:
-            cout << "Invalid Option" << endl;
-            cout << "Please enter a valid option" << endl;
+            cout << "Invalid rank" << endl;
         }
     } while (check >= 3);
 }
